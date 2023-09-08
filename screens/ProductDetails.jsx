@@ -1,6 +1,7 @@
 import { TouchableOpacity, View, Text, Image } from "react-native";
 import React, { useState } from "react";
 import styles from "./productDetails.style";
+import { useRoute } from "@react-navigation/native";
 import {
   Ionicons,
   MaterialCommunityIcons,
@@ -10,6 +11,8 @@ import {
 import { COLORS, SIZES } from "../constants";
 
 const ProductDetails = ({ navigation }) => {
+  const route = useRoute();
+  const { item } = route.params;
   const [count, setCount] = useState(1);
 
   const increment = () => {
@@ -35,15 +38,15 @@ const ProductDetails = ({ navigation }) => {
       </View>
       <Image
         source={{
-          uri: "https://contentgrid.homedepot-static.com/hdus/en_US/DTCCOMNEW/Articles/small-living-room-ideas-section-2.jpg",
+          uri: item.imageUrl,
         }}
         style={styles.image}
       />
       <View style={styles.details}>
         <View style={styles.titleRow}>
-          <Text style={styles.title}>Product</Text>
+          <Text style={styles.title}>{item.title}</Text>
           <View style={styles.priceWrapper}>
-            <Text style={styles.price}>$ 660.98</Text>
+            <Text style={styles.price}>${item.price}</Text>
           </View>
         </View>
 
@@ -68,23 +71,13 @@ const ProductDetails = ({ navigation }) => {
 
         <View style={styles.descriptionWrapper}>
           <Text style={styles.description}>Description</Text>
-          <Text style={styles.descText}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </Text>
+          <Text style={styles.descText}>{item.description}</Text>
         </View>
         <View style={{ marginBottom: SIZES.small }}>
           <View style={styles.location}>
             <View style={{ flexDirection: "row" }}>
               <Ionicons name="location-outline" size={20} />
-              <Text> Dallas </Text>
+              <Text> {item.product_location} </Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
